@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Position</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  	<script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script  type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+<a class="btn btn-success" href="/addPosition">add Position</a>
+
+  	<table class="table table-bordered">
+	  	<tr>
+	  	    <th>title</th>
+		    <th>skills</th> 
+		</tr>
+
+		<% positions.forEach(function(pos){ %>
+			<tr>
+				<td><%= pos.title %></td>
+			    <td>
+			    	<% pos.skills.forEach(function(skill){ %>
+			    		<%= skill.name +' : '+skill.score + ' ,'%>
+			    	<% }); %>
+			    </td> 
+			</tr>
+		<% }); %>
+ 
+	</table>
+
+  </body>
+ </html>
+  
