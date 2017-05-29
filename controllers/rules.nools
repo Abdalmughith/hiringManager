@@ -6,8 +6,10 @@ define Person {
 		this.id = scope.count;
 		if(obj.id)
 			this.id = obj.id;
-		this.name = obj.name;
+		this.title = obj.name;
+		this.age = obj.age;
 		this.age = obj.age;	
+
 		scope.count++;
 	}
 }
@@ -29,9 +31,9 @@ define personPos {
 }
 
 define position {
-	constructor: function (name,skills) {
+	constructor: function (title,skills) {
 		this.id = scope.countPosition;
-		this.name = name;
+		this.title = title;
 		this.skills = skills;
 
 		scope.countPosition++;
@@ -46,7 +48,7 @@ define Result {
 
 rule "web devloper" {
 	when {
-		pos: position pos.name == 'web devloper';
+		pos: position pos.title == 'web devloper';
 		c: Person;
 		s1: skill s1.personId == c.id && s1.skillName == pos.skills[0].name;
 		s2: skill s2.personId == c.id && s2.skillName == pos.skills[1].name;

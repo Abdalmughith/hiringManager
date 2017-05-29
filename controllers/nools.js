@@ -4,7 +4,7 @@ var _ = require("lodash");
 var declare = require("declare.js");
 
 //flow 
-var flow = nools.compile(__dirname + '/ex.nools');
+var flow = nools.compile(__dirname + '/rules.nools');
 
 
 var Person = flow.getDefined('Person');

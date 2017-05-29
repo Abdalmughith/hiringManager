@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>main</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  	<script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script  type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+
+  </head>
+
+
+  <body>
+<a class="btn btn-success" href="#" id="initializeSession">initialize Session</a>
+<a class="btn btn-success" href="/addCv">add cv</a>
+<a class="btn btn-success" href="/addPosition">add Position</a>
+<a class="btn btn-success" href="/positions">view Positiones</a>
+<a class="btn btn-success" href="/cvs">view cvs</a>
+
+
+
+  	
+
+  </body>
+		<script type="text/javascript">
+            $(function(){				
+                $('#initializeSession').click(function(e){
+                    e.preventDefault();
+                    console.log('test jquery clicked');
+					var data = {};
+					data.title = "title";
+					data.message = "message";
+					
+					$.ajax({
+						type: 'POST',
+						data: JSON.stringify(data),
+				        contentType: 'application/json',
+                        url: 'http://localhost:3000/initializeSession',						
+                        success: function(data) {
+                            alert("hi");
+                            console.log(JSON.stringify(data));
+                        }
+                    });
+			
+                });				
+            });
+        </script>
+ </html>
+  

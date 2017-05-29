@@ -1,10 +1,29 @@
 var express = require('express'),
 	router = express.Router();
-
+var nools = require('nools');
 router.get('/', function(req, res) {
-	res.render("index", {
-		title: "aaa"
+	res.render("main", {
+		alertMessage: 'initialize Session Done !'
+
 	});
+});
+
+
+router.post('/initializeSession', function(req, res) {
+
+	var flow = nools.compile(__dirname + '/rules.nools');
+	var Person = flow.getDefined('Person');
+	var skill = flow.getDefined('skill');
+	var Position = flow.getDefined('position');
+	var Result = flow.getDefined('Result');
+	var session = flow.getSession();
+	var result = new Result();
+	session.assert(result);
+
+	console.log("post initializeSession");
+	
+	res.status(200).send({msg:"initializeSession"});
+	
 });
 
 
@@ -21,14 +40,30 @@ router.get('/positions', function(req, res) {
 	})
 });
 
-router.get('/cv', function(req, res) {
+router.get('/cvs', function(req, res) {
 
 	Models.person.find({}, function(err, data) {
 		if (err)
 			return res.json(err);
-		return res.json(data);
+		return res.render('cvs', {
+			persones: data
+		});
 
 	})
+});
+
+router.get('/assertCv', function(req, res) {
+	Models.person.find({}, function(err, data) {
+		if (err)
+			return res.json(err);
+
+
+		return res.render('main', {
+			alertMessage: ""
+		});
+
+	})
+
 });
 
 
@@ -78,6 +113,19 @@ router.post('/addCv', function(req, res) {
 		return res.json(person);
 	});
 
+});
+
+
+router.get('/test', function(req, res) {
+	res.render("test", {
+		// title: "aaa"
+	});
+});
+
+router.post('/test', function(req, res) {
+	var obj = {};
+	console.log('body: ' + JSON.stringify(req.body));
+	res.send(req.body);
 });
 // router.use('/test', require('./test'));
 

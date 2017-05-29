@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>test</title>
+		<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>		
+		<script type="text/javascript">
+            $(function(){				
+                $('#test').click(function(e){
+                    e.preventDefault();
+                    console.log('test jquery clicked');
+					var data = {};
+					data.title = "title";
+					data.message = "message";
+					
+					$.ajax({
+						type: 'POST',
+						data: JSON.stringify(data),
+				        contentType: 'application/json',
+                        url: 'http://localhost:3000/test',						
+                        success: function(data) {
+                            console.log('success');
+                            console.log(JSON.stringify(data));
+                        }
+                    });
+					/*$.ajax('http://localhost:3000/endpoint', {
+					        type: 'POST',
+					        data: JSON.stringify(data),
+					        contentType: 'application/json',
+					        success: function() { console.log('success');},
+					        error  : function() { console.log('error');}
+					});*/
+                });				
+            });
+        </script>
+    </head>
+    <body>
+        <div id="test"><a href="#" id="test">test jquery</a></div>    
+    </body>
+</html>
