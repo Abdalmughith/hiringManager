@@ -71,6 +71,9 @@ initialize = function() {
 				age: person.age
 			});
 			session.assert(tempPerson);
+
+			if(person.education)session.assert(new SkillTemplate(tempPerson.id,'education', person.education));
+			if(person.education)session.assert(new SkillTemplate(tempPerson.id,'experience', person.experience));
 			for (var i = person.skills.length - 1; i >= 0; i--) {
 				session.assert(new SkillTemplate(tempPerson.id, person.skills[i].name, person.skills[i].score));
 			}
@@ -82,7 +85,7 @@ initialize = function() {
 			if (err)
 				return cb(err);
 			for (var j = positions.length - 1; j >= 0; j--) {
-				session.assert(new Position(positions[j].title, positions[j].skills))
+				session.assert(new Position(positions[j].title, positions[j].skills, positions[j].education, positions[j].experience))
 			}
 			// var persones = session.getFacts(Person);
 			// var skills = session.getFacts(skill);

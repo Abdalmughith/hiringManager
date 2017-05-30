@@ -10,6 +10,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/result', function(req, res) {
+	// console.log(session.getFacts(SkillTemplate));
 	Models.position.find({},function(err,positions){
 		if(err)
 			return res.json(err);
@@ -151,7 +152,7 @@ var constraine = [
 	        [Position, "pos",  _parse("pos.title == \"%s\"",position.title)],
 	        [Person, "c", ""]
 		];
-	var totalScore = _.sumBy(position.skills, function(o) { return o.score; });
+	var totalScore = _.sumBy(position.skills, function(o) { return o.score; })  *2;  // /2
 	var rankString = '		var rank = (0';
  	var rank = 0;
 
