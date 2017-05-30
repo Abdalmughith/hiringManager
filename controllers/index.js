@@ -71,6 +71,8 @@ router.get('/addPosition', function(req, res) {
 router.post('/addPosition', function(req, res) {
 	var position = new Models.position({
 		title: req.body.title,
+		education: req.body.education,
+		experience: req.body.experience,
 		skills: []
 	});
 
@@ -86,7 +88,7 @@ router.post('/addPosition', function(req, res) {
 		addRoleToFile(position, function(err) {
 			if (err)
 				return res.json(err);
-			session.assert(new Position(position.title, position.skills));
+			session.assert(new Position(position.title, position.education,position.experience,position.skills));
 			return res.redirect('./positions');
 
 		});
@@ -102,10 +104,12 @@ router.post('/addCv', function(req, res) {
 	var person = new Models.person({
 		name: req.body.name,
 		age: req.body.age,
+		education: req.body.education,
+		experience: req.body.experience,
 		skills: []
 	});
 	_.forEach(req.body, function(value, index) {
-		if (index != 'name' && index != 'age' && value != 0) person.skills.push({
+		if (index != 'name' && index != 'age' && index != 'education' && index != 'experience' &&  value != 0) person.skills.push({
 			name: index,
 			score: value
 		});
@@ -119,17 +123,17 @@ router.post('/addCv', function(req, res) {
 			age: person.age
 		});
 		session.assert(tempPerson);
+		session.assert(new SkillTemplate(tempPerson.id, 'education', person.education));
+		session.assert(new SkillTemplate(tempPerson.id, 'experience', person.experience));
 		for (var i = person.skills.length - 1; i >= 0; i--) {
-
 			session.assert(new SkillTemplate(tempPerson.id, person.skills[i].name, person.skills[i].score));
-
 		}
-		var persones = session.getFacts(Person);
-		var skills = session.getFacts(SkillTemplate)
+		// var persones = session.getFacts(Person);
+		// var skills = session.getFacts(SkillTemplate)
 		// console.log(persones);
 		// console.log(skills);
 
-		return res.redirect('');
+		return res.redirect('/');
 	});
 
 });

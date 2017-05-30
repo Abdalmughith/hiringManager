@@ -10,14 +10,33 @@
 
   	<form class="form-horizontal" method="POST"  action="/addPosition">
 	  <div class="form-group">
-	    <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+	    <label for="inputEmail3" class="col-sm-2 control-label">Title:</label>
 	    <div class="col-sm-10">
 		    <input type="text" class="form-control" name="title" placeholder="Title">
 	    </div>
 	  </div>
 
+	   <div class="form-group">
+	    <label for="inputEmail3" class="col-sm-2 control-label">Education:</label>
+	    <div class="col-sm-10">
+	    	<select  name="education" class="form-control">
+	    		<option value="student">student</option>
+	    		<option value="bachelor ">bachelor </option>
+	    		<option value="master">master</option>
+	    		<option value="phd">phd</option>
+	    	</select>
+	    </div>
+	  </div>
+
 	  <div class="form-group">
-	    <label for="inputPassword3" class="col-sm-2 control-label">Skills</label>
+	    <label for="inputEmail3" class="col-sm-2 control-label">Experience:</label>
+	    <div class="col-sm-10">
+		    <input type="number" class="form-control" name="experience" placeholder="experience">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputPassword3" class="col-sm-2 control-label">Skills:</label>
 	    <% skills.forEach(function(skill){ %>
 
 	   
@@ -26,7 +45,7 @@
 	        <label><input type="checkbox" name="skill_<%=skill%>"><%= skill %></label>
 	      </div>
 	       <div class="col-xs-2">
-		    <input type="text" class="form-control" placeholder="Rank" name="skill_<%=skill%>">
+		    <input type="number" class="form-control" placeholder="Rank" name="skill_<%=skill%>">
 		  </div>
 	    </div>
 	     <% }); %>

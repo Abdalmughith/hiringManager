@@ -8,7 +8,8 @@ define Person {
 			this.id = obj.id;
 		this.title = obj.name;
 		this.age = obj.age;
-		this.age = obj.age;	
+		this.education = obj.education;	
+		this.experience = obj.experience;	
 
 		scope.count++;
 	}
@@ -94,6 +95,18 @@ rule "WEb"{
 	}
 	then {
 		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/6;
+		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "Test"{
+	when {
+		pos: position pos.title == "Test";
+		c: Person;
+		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+	}
+	then {
+		var rank = (0+ (s0.score *pos.skills[0].score))/null;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }

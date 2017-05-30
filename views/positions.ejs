@@ -12,12 +12,16 @@
   	<table class="table table-bordered">
 	  	<tr>
 	  	    <th>title</th>
+		    <th>education</th> 
+		    <th>experience</th> 
 		    <th>skills</th> 
 		</tr>
 
 		<% positions.forEach(function(pos){ %>
 			<tr>
 				<td><%= pos.title %></td>
+				<td><%= pos.education %></td>
+				<td><%= pos.experience %></td>
 			    <td>
 			    	<% pos.skills.forEach(function(skill){ %>
 			    		<%= skill.name +' : '+skill.score + ' ,'%>
