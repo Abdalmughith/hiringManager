@@ -13,10 +13,26 @@ router.get('/result', function(req, res) {
 	Models.position.find({},function(err,positions){
 		if(err)
 			return res.json(err);
-		if(req.query.name)
-		return res.render("result", {
-			positions : positions
-		});
+		if(req.query.name){
+			session.assert(new getpositionPersons(req.query.name));
+			session.match().then(
+			  function(){
+			  	var  result1 = _.sortBy(result.fired[req.query.name], [function(o) { return o.rank; }]);
+			  	result.fired = {};
+			      return res.render("result", {
+					positions : positions,
+					result : result1
+				});
+			  },
+			  function(err){
+			    //uh oh an error occurred
+			    console.error(err.stack);
+			});
+		}
+		else
+			return res.render("result", {
+				positions : positions
+			});
 	});
 });
 
@@ -109,10 +125,10 @@ router.post('/addCv', function(req, res) {
 		}
 		var persones = session.getFacts(Person);
 		var skills = session.getFacts(SkillTemplate)
-		console.log(persones);
-		console.log(skills);
+		// console.log(persones);
+		// console.log(skills);
 
-		return res.json(person);
+		return res.redirect('');
 	});
 
 });
@@ -152,7 +168,7 @@ var constraine = [
 	fs.appendFile(__dirname + '/rules.nools', data, function(err) {
 		if (err) return cb(err);
 
-		 flow.rule(position.title, constraine, function (facts) {
+		 flow.rule(position.title, {scope: {isEqualTo: ()=>{}}},constraine, function (facts) {
 		 	var rank = 0;
 		 	for(i=0;i<globalConfig.skills.length;i++){
 		 		if(!facts['s'+i])
