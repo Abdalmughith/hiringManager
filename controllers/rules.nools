@@ -8,8 +8,6 @@ define Person {
 			this.id = obj.id;
 		this.title = obj.name;
 		this.age = obj.age;
-		this.education = obj.education;	
-		this.experience = obj.experience;	
 
 		scope.count++;
 	}
@@ -32,9 +30,11 @@ define personPos {
 }
 
 define position {
-	constructor: function (title,skills) {
+	constructor: function (title,skills,education,experience) {
 		this.id = scope.countPosition;
 		this.title = title;
+		this.education = education;	
+		this.experience = experience;	
 		this.skills = skills;
 
 		scope.countPosition++;
