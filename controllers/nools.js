@@ -59,10 +59,11 @@ session.match(function(err){
             var skills = session.getFacts(skill);
             var positions = session.getFacts(Position);
             var personPos = session.getFacts(personPos);
+             console.log("personPos " + personPos);
+            
              console.log(persones);
             console.log(skills);
             console.log("positions"+positions);
-             console.log("personPos " + personPos);
         console.log("done");
     }
 })

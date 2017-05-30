@@ -27,6 +27,8 @@ define personPos {
 		this.posId = posId;
 		this.rank = rank;
 		this.isEducationRank = false;
+		this.isExperienceRank = false;
+
 	}
 }
 
@@ -128,7 +130,7 @@ rule "WEb"{
 
 rule "experinceRank" {
 	when {
-		perPos: personPos ; 
+		perPos: personPos perPos.isExperienceRank == false; 
 		pos: position pos.id== perPos.posId;
 		person : Person  person.id == perPos.personId;
         s : skill s.personId == person.id &&  s.skillName =="experience";
@@ -136,9 +138,13 @@ rule "experinceRank" {
 	then {
 		console.log("hi");
 		var perRank = perPos.rank;
+
 		if(s.score > pos.experience)
 			perPos.rank = perRank + 3;
-		perPos.rank = (s.score * 3)/pos.experience;
+		else	
+		perPos.rank = perRank + (s.score * 3)/pos.experience;
+
+		perPos.isExperienceRank = true;
 		modify(perPos);
 		
 	}
