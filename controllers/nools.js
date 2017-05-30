@@ -12,6 +12,9 @@ var skill = flow.getDefined('skill');
 var Position = flow.getDefined('position');
 var Result = flow.getDefined('Result');
 
+var getpositionPersons = flow.getDefined('getpositionPersons');
+
+
 
 var session = flow.getSession();
 
@@ -50,7 +53,7 @@ session.match(function(err){
     if(err){
         console.error(err.stack);
     }else{
-        console.log(result.rules);
+        console.log(result.fired);
         console.log("done");
     }
 })

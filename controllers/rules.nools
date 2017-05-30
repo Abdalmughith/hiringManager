@@ -48,7 +48,7 @@ define getpositionPersons {
 }
 
 define Result {
-	fired: {}
+	fired: []
 }
 
 
@@ -74,7 +74,7 @@ rule "getpositionPersons" {
 		pos: position pos.title == p.title;
 		perPos : personPos perPos.posId == pos.id;
 		person : Person  person.id == perPos.personId;
-		r: result;
+		r: Result;
 	}
 	then {
 		if (r.fired[pos.title] === undefined)
@@ -86,9 +86,9 @@ rule "getpositionPersons" {
 rule "QQQ" {
 	when {
 	r : Result;
-	perPos : personPos;
+	p : Person;
 	}
 	then {
-		r.rules.push(perPos);
+		r.fired.push(p);
 	}
 }
