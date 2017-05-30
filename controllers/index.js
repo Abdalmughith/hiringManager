@@ -8,22 +8,23 @@ router.get('/', function(req, res) {
 	});
 });
 
+var flow = nools.compile(__dirname + '/rules.nools');
+var Person = flow.getDefined('Person');
+var skill = flow.getDefined('skill');
+var Position = flow.getDefined('position');
+var Result = flow.getDefined('Result');
+var session = flow.getSession();
+var result = new Result();
+session.assert(result);
 
 router.post('/initializeSession', function(req, res) {
 
-	var flow = nools.compile(__dirname + '/rules.nools');
-	var Person = flow.getDefined('Person');
-	var skill = flow.getDefined('skill');
-	var Position = flow.getDefined('position');
-	var Result = flow.getDefined('Result');
-	var session = flow.getSession();
-	var result = new Result();
-	session.assert(result);
 
-	console.log("post initializeSession");
-	
-	res.status(200).send({msg:"initializeSession"});
-	
+
+	res.status(200).send({
+		msg: "initialize Session Done!"
+	});
+
 });
 
 
@@ -57,10 +58,24 @@ router.get('/assertCv', function(req, res) {
 		if (err)
 			return res.json(err);
 
+		for (var j = data.length - 1; j >= 0; j -- ) {
+			var person = data[j];
+			var tempPerson = new Person({
+				name: person.name,
+				age: person.age
+			});
+			session.assert(tempPerson);
+			for (var i = person.skills.length - 1; i >= 0; i--) {
 
-		return res.render('main', {
-			alertMessage: ""
-		});
+				session.assert(new skill(tempPerson.id, person.skills[i].name, person.skills[i].name));
+
+			}
+
+		}
+		var persones = session.getFact(Person);
+		var skills = session.getFact(skill);
+
+		return res.send({persones : persones,skills:skills});
 
 	})
 
@@ -110,6 +125,22 @@ router.post('/addCv', function(req, res) {
 	person.save(function(err) {
 		if (err)
 			return res.json(err);
+
+		var tempPerson = new Person({
+			name: person.name,
+			age: person.age
+		});
+		session.assert(tempPerson);
+		for (var i = person.skills.length - 1; i >= 0; i--) {
+
+			session.assert(new skill(tempPerson.id, person.skills[i].name, person.skills[i].score));
+
+		}
+		var persones = session.getFacts(Person);
+		var skills = session.getFacts(skill)
+		console.log(persones);
+		console.log(skills); 
+
 		return res.json(person);
 	});
 

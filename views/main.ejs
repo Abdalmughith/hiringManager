@@ -38,7 +38,8 @@
 				        contentType: 'application/json',
                         url: 'http://localhost:3000/initializeSession',						
                         success: function(data) {
-                            alert("hi");
+
+                            alert(data.msg);
                             console.log(JSON.stringify(data));
                         }
                     });
