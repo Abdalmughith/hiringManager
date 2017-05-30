@@ -84,40 +84,16 @@ rule "getAllpositionPersons" {
 		r.fired[pos.title].push({person : person, rank: perPos.rank});
 	}
 }
-rule "TEST"{
+
+rule "WEb"{
 	when {
-		pos: position pos.title == "TEST";
+		pos: position pos.title == "WEb";
 		c: Person;
 		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
 		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
-		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
 	}
 	then {
-		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score))/10;
-		assert(new personPos(c.id,pos.id,rank));
-	}
-}
-
-rule "T1"{
-	when {
-		pos: position pos.title == "T1";
-		c: Person;
-		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
-	}
-	then {
-		var rank = (0+ (s0.score *pos.skills[0].score))/5;
-		assert(new personPos(c.id,pos.id,rank));
-	}
-}
-
-rule "T2"{
-	when {
-		pos: position pos.title == "T2";
-		c: Person;
-		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
-	}
-	then {
-		var rank = (0+ (s0.score *pos.skills[0].score))/5;
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/6;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }

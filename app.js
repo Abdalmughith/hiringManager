@@ -60,7 +60,7 @@ session = flow.getSession();
 result = new Result();
 session.assert(result);
 
-var initialize = function() {
+initialize = function() {
 	Models.person.find({}, function(err, data) {
 		if (err)
 			return cb(err);
@@ -96,7 +96,8 @@ var initialize = function() {
 
 
 	});
-}();
+}
+initialize();
 
 
 

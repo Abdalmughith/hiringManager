@@ -31,7 +31,8 @@ router.get('/result', function(req, res) {
 		}
 		else
 			return res.render("result", {
-				positions : positions
+				positions : positions,
+				result : []
 			});
 	});
 });
@@ -179,6 +180,17 @@ var constraine = [
 		 	rank /= totalScore;
 	        this.assert(new personPos(facts.c.id,facts.pos.id,rank));
 	    });
+
+
+
+		// flow = nools.compile(data,{name : "A",define: {
+	 //        Person: Person,
+	 //        position: Position,
+	 //        personPos: personPos,
+	 //        skill: SkillTemplate
+	 //    }});
+		// session = flow.getSession();
+		// initialize();
 	  	return cb(null);
 	});
 }
