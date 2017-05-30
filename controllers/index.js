@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/result', function(req, res) {
-	res.render("result", {
+	res.render("result1", {
 
 	});
 });

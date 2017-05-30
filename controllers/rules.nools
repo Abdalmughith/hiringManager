@@ -41,9 +41,16 @@ define position {
 }
 
 
-define Result {
-	rules: []
+define getpositionPersons {
+	constructor: function (title) {
+		this.title = title;
+	}
 }
+
+define Result {
+	fired: {}
+}
+
 
 
 rule "web devloper" {
@@ -58,6 +65,21 @@ rule "web devloper" {
 		var totalScore = pos.skills[0].score+pos.skills[1].score+pos.skills[2].score;
 		var rank = ((s1.score *pos.skills[0].score)+ (s2.score *pos.skills[1].score)+ (s3.score *pos.skills[2].score))/totalScore;
 		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "getpositionPersons" {
+	when {
+		p:getpositionPersons ; 
+		pos: position pos.title == p.title;
+		perPos : personPos perPos.posId == pos.id;
+		person : Person  person.id == perPos.personId;
+		r: result;
+	}
+	then {
+		if (r.fired[pos.title] === undefined)
+			r.fired[pos.title]=[];
+		r.fired[pos.title].push({person : person, rank: perPos.rank});
 	}
 }
 
