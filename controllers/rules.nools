@@ -48,13 +48,9 @@ define getpositionPersons {
 }
 
 define Result {
-<<<<<<< HEAD
-	fired: []
-=======
 	constructor: function (title) {
 		this.fired = {};
 	}
->>>>>>> abbb723cf47a8a5594aee768e40b9b992fa5e325
 }
 
 rule "getpositionPersons" {
