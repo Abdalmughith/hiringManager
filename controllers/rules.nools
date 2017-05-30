@@ -126,6 +126,24 @@ rule "WEb"{
 	}
 }
 
+rule "experinceRank" {
+	when {
+		perPos: personPos ; 
+		pos: position pos.id== perPos.posId;
+		person : Person  person.id == perPos.personId;
+        s : skill s.personId == person.id &&  s.skillName =="experience";
+	}
+	then {
+		console.log("hi");
+		var perRank = perPos.rank;
+		if(s.score > pos.experience)
+			perPos.rank = perRank + 3;
+		perPos.rank = (s.score * 3)/pos.experience;
+		modify(perPos);
+		
+	}
+}
+
 rule "Test"{
 	when {
 		pos: position pos.title == "Test";
@@ -146,6 +164,32 @@ rule "Test Education"{
 	}
 	then {
 		var rank = (0+ (s0.score *pos.skills[0].score))/2;
+		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "tt"{
+	when {
+		pos: position pos.title == "tt";
+		c: Person;
+		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+	}
+	then {
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/0;
+		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "NaNa"{
+	when {
+		pos: position pos.title == "NaNa";
+		c: Person;
+		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+	}
+	then {
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/8;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }
