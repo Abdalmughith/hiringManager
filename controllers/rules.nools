@@ -48,9 +48,13 @@ define getpositionPersons {
 }
 
 define Result {
+<<<<<<< HEAD
+	fired: []
+=======
 	constructor: function (title) {
 		this.fired = {};
 	}
+>>>>>>> abbb723cf47a8a5594aee768e40b9b992fa5e325
 }
 
 rule "getpositionPersons" {
@@ -60,6 +64,7 @@ rule "getpositionPersons" {
 		perPos : personPos perPos.posId == pos.id;
 		person : Person  person.id == perPos.personId;
 		r: Result;
+
 	}
 	then {
 		if (r.fired[pos.title] === undefined)
@@ -112,53 +117,6 @@ rule "T1"{
 rule "T2"{
 	when {
 		pos: position pos.title == "T2";
-		c: Person;
-		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
-	}
-	then {
-		var rank = (0+ (s0.score *pos.skills[0].score))/5;
-		assert(new personPos(c.id,pos.id,rank));
-	}
-}
-
-rule "T3"{
-	when {
-		pos: position pos.title == "T3";
-		c: Person;
-		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
-	}
-	then {
-		var rank = (0+ (s0.score *pos.skills[0].score))/4;
-		assert(new personPos(c.id,pos.id,rank));
-	}
-}
-
-rule "T4"{
-	when {
-		pos: position pos.title == "T4";
-		c: Person;
-		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
-	}
-	then {
-		var rank = (0+ (s0.score *pos.skills[0].score))/5;
-		assert(new personPos(c.id,pos.id,rank));
-	}
-}
-rule "T5"{
-	when {
-		pos: position pos.title == "T5";
-		c: Person;
-		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
-	}
-	then {
-		var rank = (0+ (s0.score *pos.skills[0].score))/5;
-		assert(new personPos(c.id,pos.id,rank));
-	}
-}
-
-rule "T6"{
-	when {
-		pos: position pos.title == "T6";
 		c: Person;
 		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
 	}
