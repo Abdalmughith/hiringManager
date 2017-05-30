@@ -1,3 +1,3 @@
 module.exports  = {
-	skills : ['php','node','html','css']
+	skills : ['php','node','html','css'	]
 }
