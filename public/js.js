@@ -1,28 +1,21 @@
-$(document).ready(function () {
-  var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
+$(function () {
+    $('.navbar-toggle').click(function () {
+        $('.navbar-nav').toggleClass('slide-in');
+        $('.side-body').toggleClass('body-slide-in');
+        $('#search').removeClass('in').addClass('collapse').slideUp(200);
 
-    trigger.click(function () {
-      hamburger_cross();      
+        /// uncomment code for absolute positioning tweek see top comment in css
+        //$('.absolute-wrapper').toggleClass('slide-in');
+        
     });
+   
+   // Remove menu for searching
+   $('#search-trigger').click(function () {
+        $('.navbar-nav').removeClass('slide-in');
+        $('.side-body').removeClass('body-slide-in');
 
-    function hamburger_cross() {
+        /// uncomment code for absolute positioning tweek see top comment in css
+        //$('.absolute-wrapper').removeClass('slide-in');
 
-      if (isClosed == true) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
-  
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#wrapper').toggleClass('toggled');
-  });  
+    });
 });

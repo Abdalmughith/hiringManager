@@ -23,6 +23,7 @@ session.assert(result);
 
 
 session.assert(new Position('web devloper',[{name: 'node',score :5},{name: 'php',score :7},{name: 'html',score :1}]));
+session.assert(new Position('23v',[{name: 'php',score :1}]));
 
 
 var person2 = new Person({

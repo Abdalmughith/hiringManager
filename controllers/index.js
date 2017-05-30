@@ -10,8 +10,29 @@ router.get('/', function(req, res) {
 });
 
 router.get('/result', function(req, res) {
-	res.render("result1", {
-
+	Models.position.find({},function(err,positions){
+		if(err)
+			return res.json(err);
+		if(req.query.name){
+			session.assert(new getpositionPersons(req.query.name));
+			session.match().then(
+			  function(){
+			  	var  result1 = _.sortBy(result.fired[req.query.name], [function(o) { return o.rank; }]);
+			  	result.fired = {};
+			      return res.render("result", {
+					positions : positions,
+					result : result1
+				});
+			  },
+			  function(err){
+			    //uh oh an error occurred
+			    console.error(err.stack);
+			});
+		}
+		else
+			return res.render("result", {
+				positions : positions
+			});
 	});
 });
 
@@ -99,15 +120,15 @@ router.post('/addCv', function(req, res) {
 		session.assert(tempPerson);
 		for (var i = person.skills.length - 1; i >= 0; i--) {
 
-			session.assert(new skill(tempPerson.id, person.skills[i].name, person.skills[i].score));
+			session.assert(new SkillTemplate(tempPerson.id, person.skills[i].name, person.skills[i].score));
 
 		}
 		var persones = session.getFacts(Person);
-		var skills = session.getFacts(skill)
-		console.log(persones);
-		console.log(skills);
+		var skills = session.getFacts(SkillTemplate)
+		// console.log(persones);
+		// console.log(skills);
 
-		return res.json(person);
+		return res.redirect('');
 	});
 
 });
@@ -119,33 +140,46 @@ router.get('/test', function(req, res) {
 	})
 	
 });
-// router.use('/test', require('./test'));
 
-var addRoleToFile = function(position, cb) {
-	var totalScore = _.sumBy(position.skills, function(o) {
-		return o.score;
-	});
-	var rank = '		var rank = (0';
+var addRoleToFile = function(position,cb){
+var constraine = [
+	        [Position, "pos",  _parse("pos.title == \"%s\"",position.title)],
+	        [Person, "c", ""]
+		];
+	var totalScore = _.sumBy(position.skills, function(o) { return o.score; });
+	var rankString = '		var rank = (0';
+ 	var rank = 0;
 
 	var data = _parse('\nrule \"%s\"{\n', position.title);
 	data += _parse('	when {\n');
 	data += _parse('		pos: position pos.title == \"%s\";\n', position.title);
 	data += _parse('		c: Person;\n');
-	_.forEach(position.skills, function(skill, index) {
-		data += _parse('		s%s: skill s%s.personId == c.id && s%s.skillName == pos.skill[%s].name;\n', index, index, index, index);
-		rank += _parse('+ (s%s.score *pos.skills[%s].score)', index, index);
+	_.forEach(position.skills,function(skill,index){
+		data += _parse('		s%s: skill s%s.personId == c.id && s%s.skillName == pos.skills[%s].name;\n',index,index,index,index);
+		rankString += _parse('+ (s%s.score *pos.skills[%s].score)',index,index);
+		constraine.push([SkillTemplate,'s'+index,_parse('s%s.personId == c.id && s%s.skillName == pos.skills[%s].name',index,index,index)]);
 	});
 	data += '	}\n\tthen {\n';
-	data += rank + ')/' + totalScore + ';\n';
+	data += rankString+')/'+totalScore+';\n';
 	data += _parse('		assert(new personPos(c.id,pos.id,rank));\n');
+	//data += _parse('		console.log(\"%s\");\n',position.title);
 	data += _parse('	}\n}\n');
 
 	fs.appendFile(__dirname + '/rules.nools', data, function(err) {
 		if (err) return cb(err);
 
-
-
-		return cb(null);
+		 flow.rule(position.title, {scope: {isEqualTo: ()=>{}}},constraine, function (facts) {
+		 	var rank = 0;
+		 	for(i=0;i<globalConfig.skills.length;i++){
+		 		if(!facts['s'+i])
+		 			break;
+		 		else
+		 			rank+=facts['s'+i].score;
+		 	}
+		 	rank /= totalScore;
+	        this.assert(new personPos(facts.c.id,facts.pos.id,rank));
+	    });
+	  	return cb(null);
 	});
 }
 

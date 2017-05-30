@@ -51,9 +51,11 @@ var nools = require('nools');
 
 flow = nools.compile(__dirname + '/controllers/rules.nools');
 Person = flow.getDefined('Person');
-skill = flow.getDefined('skill');
+SkillTemplate = flow.getDefined('skill');
 Position = flow.getDefined('position');
+personPos = flow.getDefined('personPos');
 Result = flow.getDefined('Result');
+getpositionPersons = flow.getDefined('getpositionPersons');
 session = flow.getSession();
 result = new Result();
 session.assert(result);
@@ -70,7 +72,7 @@ var initialize = function() {
 			});
 			session.assert(tempPerson);
 			for (var i = person.skills.length - 1; i >= 0; i--) {
-				session.assert(new skill(tempPerson.id, person.skills[i].name, person.skills[i].score));
+				session.assert(new SkillTemplate(tempPerson.id, person.skills[i].name, person.skills[i].score));
 			}
 		}
 
