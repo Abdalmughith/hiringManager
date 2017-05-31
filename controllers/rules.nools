@@ -195,7 +195,7 @@ rule "NaNa"{
 		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
 	}
 	then {
-		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/8;
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/16;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }
