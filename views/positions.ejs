@@ -3,10 +3,10 @@
 
 <head>
 	<title>Position</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	 crossorigin="anonymous">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+   crossorigin="anonymous">
+  <script type="text/javascript" src="./jquery.min.js"></script>
+  <script type="text/javascript" src="./bootstrap.min.js"></script>
 	<style>
 		.content {
 			background-color: #ecf0f1;
@@ -30,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-				<a class="navbar-brand" href="/">CVs Filtering Project</a>
+                <a class="navbar-brand" href="/">Hiring Manager Assistance</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -50,14 +50,21 @@
 
 		<table class="table table-bordered content">
 			<tr style="background-color: #101010">
-				<th style="width: 30%; color: #ecf0f1; text-align: center;">Title</th>
-				<th colspan="2" style="color: #ecf0f1; width: 70%;text-align: center;">Skills</th>
+				<th style="width: 20%; color: #ecf0f1; text-align: center;">Title</th>
+				<th style="width: 20%; color: #ecf0f1; text-align: center;">Education</th>
+				<th style="width: 20%; color: #ecf0f1; text-align: center;">Experience</th>
+				<th colspan="2" style="color: #ecf0f1; width: 40%;text-align: center;">Skills</th>
 			</tr>
 			<% positions.forEach(function(pos, i){ var c = "#bdc3c7" ; if(i%2 != 0)  c = "#ecf0f1"; %>
 				<tr style="background-color: <%= c %>">
 					<td style="vertical-align: middle; text-align: center;" rowspan="<%= pos.skills.length + 1 %>">
 						<%= pos.title %>
 					</td>
+
+
+					<td style="vertical-align: middle; text-align: center;" rowspan="<%= pos.skills.length + 1 %>"><%= pos.education %></td>
+					<td style="vertical-align: middle; text-align: center;" rowspan="<%= pos.skills.length + 1 %>"><%= pos.experience %></td>
+
 					<td style="text-align: center;"><b>Name</b></td>
 					<td style="text-align: center;"><b>Rank</b></td>
 				</tr>

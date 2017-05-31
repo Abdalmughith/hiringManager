@@ -3,10 +3,10 @@
 
 <head>
 	<title>cv</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	 crossorigin="anonymous">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+   crossorigin="anonymous">
+  <script type="text/javascript" src="./jquery.min.js"></script>
+  <script type="text/javascript" src="./bootstrap.min.js"></script>
 	<style>
 		.content {
 			background-color: #ecf0f1;
@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-				<a class="navbar-brand" href="/">CVs Filtering Project</a>
+                <a class="navbar-brand" href="/">Hiring Manager Assistance</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -51,9 +51,11 @@
 		<div class="col-xs-10 col-xs-offset-1">
 			<table class="table table-bordered content">
 				<tr style="background-color: #101010">
-					<th style="width: 20%; color: #ecf0f1; text-align: center;">name</th>
-					<th style="width: 20%; color: #ecf0f1; text-align: center;">age</th>
-					<th colspan="2" style="width: 60%; color: #ecf0f1; text-align: center;">skills</th>
+					<th style="width: 15%; color: #ecf0f1; text-align: center;">Name</th>
+					<th style="width: 15%; color: #ecf0f1; text-align: center;">Age</th>
+					<th style="width: 15%; color: #ecf0f1; text-align: center;">Education</th>
+					<th style="width: 15%; color: #ecf0f1; text-align: center;">Experience</th>
+					<th colspan="2" style="width: 40%; color: #ecf0f1; text-align: center;">skills</th>
 				</tr>
 
 				<% persones.forEach(function(pos, i){ var c = "#bdc3c7" ; if(i%2 != 0)  c = "#ecf0f1"; %>
@@ -63,6 +65,14 @@
 						</td>
 						<td style="vertical-align: middle; text-align: center;" rowspan="<%= pos.skills.length + 1 %>">
 							<%= pos.age %>
+						</td>
+
+
+						<td style="vertical-align: middle; text-align: center;" rowspan="<%= pos.skills.length + 1 %>">
+							<%= pos.education %>
+						</td>
+						<td style="vertical-align: middle; text-align: center;" rowspan="<%= pos.skills.length + 1 %>">
+							<%= pos.experience %>
 						</td>
 
 						<td style="text-align: center;"><b>Name</b></td>

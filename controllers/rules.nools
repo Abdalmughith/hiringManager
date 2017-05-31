@@ -28,7 +28,6 @@ define personPos {
 		this.rank = rank;
 		this.isEducationRank = false;
 		this.isExperienceRank = false;
-
 	}
 }
 
@@ -67,12 +66,27 @@ rule "educationRank" {
 	// pos.education == 'master')|| (sk.score != 'student'  && sk.score != 'bachelor' && sk.score != 'master' && pos.education == 'phd'));
 	}
 	then {
-		console.log('position : '+pos.education,'  , person : ',pos.title,' : ',sk.score);
 		var educationR =0;
-		if(sk.score == 'student')educationR = 0.5;
-		if(sk.score == 'bachelor')educationR = 1;
-		if(sk.score == 'master')educationR = 1.5;
-		if(sk.score == 'phd')educationR = 2;
+		console.log();
+		if(_.replace(pos.education,' ','') == 'student'){
+			if(_.replace(sk.score,' ','') == 'student') educationR = 0.5;
+			if(_.replace(sk.score,' ','') == 'bachelor') educationR = 1;
+			if(_.replace(sk.score,' ','') == 'master') educationR = 1.5;
+		}
+		if(_.replace(pos.education,' ','') == 'bachelor'){
+			if(_.replace(sk.score,' ','') == 'bachelor') educationR = 1;
+			if(_.replace(sk.score,' ','') == 'master') educationR = 1.5;
+		}
+		if(_.replace(pos.education,' ','') == 'master'){
+			if(_.replace(sk.score,' ','') == 'master') educationR = 1;
+		}
+		
+		if(_.replace(sk.score,' ','') == 'phd') educationR = 2;
+
+		//if(sk.score == 'student')educationR = 0.5;
+		//if(_.replace(sk.score, ' ', '') == 'bachelor')educationR = 1;
+		//if(sk.score == 'master')educationR = 1.5;
+		//if(sk.score == 'phd')educationR = 2;
 
 		modify(personPosition, function(){
 			this.rank += educationR;
@@ -81,11 +95,39 @@ rule "educationRank" {
 	}
 }
 
+rule "experienceRank" {
+	when {
+		personPosition: personPos personPosition.isExperienceRank == false; 
+		pos: position pos.id== personPosition.posId;
+		person: Person  person.id == personPosition.personId;
+        sk: skill sk.personId == person.id && sk.skillName =="experience" ;	
+	}
+	then {
+		console.log("hi");
+		var perRank = personPosition.rank;
+
+		if(sk.score >= pos.experience)
+			var ERank =  3;
+		else	
+		var ERank = (sk.score * 3)/pos.experience;
+
+		personPosition.isExperienceRank = true;
+		modify(personPosition);
+
+		modify(personPosition, function(){
+			this.rank += ERank;
+			this.isExperienceRank = true;
+		});
+	}
+}
+
+
+
 rule "getpositionPersons" {
 	when {
 		p:getpositionPersons ; 
 		pos: position pos.title == p.title;
-		perPos : personPos perPos.posId == pos.id;
+		perPos : personPos perPos.posId == pos.id && perPos.isExperienceRank == true && perPos.isEducationRank == true;
 		person : Person  person.id == perPos.personId;
 		educationSkill : skill educationSkill.personId == person.id && educationSkill.skillName == 'education';
 		experienceSkill : skill experienceSkill.personId == person.id && experienceSkill.skillName == 'experience';
@@ -115,87 +157,147 @@ rule "getAllpositionPersons" {
 	}
 }
 
-rule "WEb"{
+rule "AI"{
 	when {
-		pos: position pos.title == "WEb";
+		pos: position pos.title == "AI";
 		c: Person;
 		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
 		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
 	}
 	then {
-		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/6;
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/4;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }
 
-rule "experinceRank" {
+rule "frontEnd"{
 	when {
-		perPos: personPos perPos.isExperienceRank == false; 
-		pos: position pos.id== perPos.posId;
-		person : Person  person.id == perPos.personId;
-        s : skill s.personId == person.id &&  s.skillName =="experience";
-	}
-	then {
-		console.log("hi");
-		var perRank = perPos.rank;
-
-		if(s.score > pos.experience)
-			perPos.rank = perRank + 3;
-		else	
-		perPos.rank = perRank + (s.score * 3)/pos.experience;
-
-		perPos.isExperienceRank = true;
-		modify(perPos);
-		
-	}
-}
-
-rule "Test"{
-	when {
-		pos: position pos.title == "Test";
+		pos: position pos.title == "frontEnd";
 		c: Person;
 		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
 	}
 	then {
-		var rank = (0+ (s0.score *pos.skills[0].score))/2;
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score))/34;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }
 
-rule "Test Education"{
+rule "Frontend developer"{
 	when {
-		pos: position pos.title == "Test Education";
+		pos: position pos.title == "Frontend developer";
 		c: Person;
 		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
 	}
 	then {
-		var rank = (0+ (s0.score *pos.skills[0].score))/2;
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score))/40;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }
 
-rule "tt"{
+rule "Fullstack Developer"{
 	when {
-		pos: position pos.title == "tt";
+		pos: position pos.title == "Fullstack Developer";
+		c: Person;
+		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
+		s3: skill s3.personId == c.id && s3.skillName == pos.skills[3].name;
+		s4: skill s4.personId == c.id && s4.skillName == pos.skills[4].name;
+	}
+	then {
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score)+ (s3.score *pos.skills[3].score)+ (s4.score *pos.skills[4].score))/70;
+		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "MEAN Stack Developer"{
+	when {
+		pos: position pos.title == "MEAN Stack Developer";
+		c: Person;
+		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
+		s3: skill s3.personId == c.id && s3.skillName == pos.skills[3].name;
+		s4: skill s4.personId == c.id && s4.skillName == pos.skills[4].name;
+		s5: skill s5.personId == c.id && s5.skillName == pos.skills[5].name;
+	}
+	then {
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score)+ (s3.score *pos.skills[3].score)+ (s4.score *pos.skills[4].score)+ (s5.score *pos.skills[5].score))/74;
+		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "Android Developer"{
+	when {
+		pos: position pos.title == "Android Developer";
+		c: Person;
+		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
+	}
+	then {
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score))/48;
+		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "Project Manager"{
+	when {
+		pos: position pos.title == "Project Manager";
+		c: Person;
+		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
+		s3: skill s3.personId == c.id && s3.skillName == pos.skills[3].name;
+	}
+	then {
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score)+ (s3.score *pos.skills[3].score))/32;
+		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "Database Administrator"{
+	when {
+		pos: position pos.title == "Database Administrator";
 		c: Person;
 		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
 		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
 	}
 	then {
-		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/0;
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/32;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }
 
-rule "NaNa"{
+rule "Data Scientist "{
 	when {
-		pos: position pos.title == "NaNa";
+		pos: position pos.title == "Data Scientist ";
 		c: Person;
 		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
 		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
 	}
 	then {
-		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score))/16;
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score))/44;
+		assert(new personPos(c.id,pos.id,rank));
+	}
+}
+
+rule "Game Developer"{
+	when {
+		pos: position pos.title == "Game Developer";
+		c: Person;
+		s0: skill s0.personId == c.id && s0.skillName == pos.skills[0].name;
+		s1: skill s1.personId == c.id && s1.skillName == pos.skills[1].name;
+		s2: skill s2.personId == c.id && s2.skillName == pos.skills[2].name;
+		s3: skill s3.personId == c.id && s3.skillName == pos.skills[3].name;
+	}
+	then {
+		var rank = (0+ (s0.score *pos.skills[0].score)+ (s1.score *pos.skills[1].score)+ (s2.score *pos.skills[2].score)+ (s3.score *pos.skills[3].score))/56;
 		assert(new personPos(c.id,pos.id,rank));
 	}
 }

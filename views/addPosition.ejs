@@ -3,23 +3,23 @@
 
 <head>
   <title>add Position</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-
+  <link rel="stylesheet" href="./bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+   crossorigin="anonymous">
+  <script type="text/javascript" src="./jquery.min.js"></script>
+  <script type="text/javascript" src="./bootstrap.min.js"></script>
   <style>
     .content {
         background-color: #ecf0f1;
         border: 3px #101010 solid; 
         border-radius: 6px; 
         padding: 32px 0px;
+        margin-bottom: 16px;
         box-shadow: 3px 3px 12px gray;
     }
   </style>
 </head>
 
-<body style="background-image:url('http://localhost:3000/images/bg2.jpg'); background-repeat: no-repeat; background-size: 100%; padding-top: 70px; background-attachment: fixed;">
+<body style="background-image:url('./images/bg2.jpg'); background-repeat: no-repeat; background-size: 100%; padding-top: 70px; background-attachment: fixed;">
   <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -30,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-        <a class="navbar-brand" href="/">CVs Filtering Project</a>
+                <a class="navbar-brand" href="/">Hiring Manager Assistance</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -50,11 +50,34 @@
     <div class="content col-xs-8 col-xs-offset-2">
       <form class="form-horizontal" method="POST" action="/addPosition">
         <div class="col-xs-12 form-group">
-          <label for="inputEmail3" class="col-xs-1 control-label" style="text-align: center;">Title</label>
-          <div class="col-xs-11">
+          <label for="inputEmail3" class="col-xs-2 control-label" style="text-align: center;">Title</label>
+          <div class="col-xs-10">
             <input type="text" class="form-control" name="title" placeholder="Title">
           </div>
         </div>
+
+
+
+     <div class="col-xs-12 form-group">
+      <label for="inputEmail3" class="col-xs-2 control-label">Education</label>
+      <div class="col-xs-10">
+        <select  name="education" class="form-control">
+          <option value="student">student</option>
+          <option value="bachelor ">bachelor </option>
+          <option value="master">master</option>
+          <option value="phd">phd</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-xs-12 form-group">
+      <label for="inputEmail3" class="col-xs-2 control-label">Experience</label>
+      <div class="col-xs-10">
+        <input type="number" class="form-control" name="experience" placeholder="experience">
+      </div>
+    </div>
+
+
 
         <div class="col-xs-12 form-group">
           <label class="col-xs-12 control-label" style="text-align: center; margin:8px 0px;">Skills</label>
