@@ -1,65 +1,90 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>add Position</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  	<script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script  type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-  </head>
-  <body>
 
-  	<form class="form-horizontal" method="POST"  action="/addPosition">
-	  <div class="form-group">
-	    <label for="inputEmail3" class="col-sm-2 control-label">Title:</label>
-	    <div class="col-sm-10">
-		    <input type="text" class="form-control" name="title" placeholder="Title">
-	    </div>
-	  </div>
+<head>
+  <title>add Position</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 
-	   <div class="form-group">
-	    <label for="inputEmail3" class="col-sm-2 control-label">Education:</label>
-	    <div class="col-sm-10">
-	    	<select  name="education" class="form-control">
-	    		<option value="student">student</option>
-	    		<option value="bachelor ">bachelor </option>
-	    		<option value="master">master</option>
-	    		<option value="phd">phd</option>
-	    	</select>
-	    </div>
-	  </div>
+  <style>
+    .content {
+        background-color: #ecf0f1;
+        border: 3px #101010 solid; 
+        border-radius: 6px; 
+        padding: 32px 0px;
+        box-shadow: 3px 3px 12px gray;
+    }
+  </style>
+</head>
 
-	  <div class="form-group">
-	    <label for="inputEmail3" class="col-sm-2 control-label">Experience:</label>
-	    <div class="col-sm-10">
-		    <input type="number" class="form-control" name="experience" placeholder="experience">
-	    </div>
-	  </div>
+<body style="background-image:url('http://localhost:3000/images/bg2.jpg'); background-repeat: no-repeat; background-size: 100%; padding-top: 70px; background-attachment: fixed;">
+  <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+          aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+        <a class="navbar-brand" href="/">CVs Filtering Project</a>
+      </div>
 
-	  <div class="form-group">
-	    <label for="inputPassword3" class="col-sm-2 control-label">Skills:</label>
-	    <% skills.forEach(function(skill){ %>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"> <a href="/addPosition">Add New Position</a> </li>
+          <li> <a href="/positions">View All Positions</a> </li>
+          <li> <a href="/addCv">Add New CV</a> </li>
+          <li> <a href="/cvs">View All CVs</a> </li>
+          <li> <a href="/result">Result</a> </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-	   
-	    <div class="col-sm-offset-2 col-sm-10">
-	      <div class="checkbox col-xs-2">
-	        <label><input type="checkbox" name="skill_<%=skill%>"><%= skill %></label>
-	      </div>
-	       <div class="col-xs-2">
-		    <input type="number" class="form-control" placeholder="Rank" name="skill_<%=skill%>">
-		  </div>
-	    </div>
-	     <% }); %>
 
-	  </div>
-	  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-success">Submit</button>
+  <div class="container">
+    <div class="content col-xs-8 col-xs-offset-2">
+      <form class="form-horizontal" method="POST" action="/addPosition">
+        <div class="col-xs-12 form-group">
+          <label for="inputEmail3" class="col-xs-1 control-label" style="text-align: center;">Title</label>
+          <div class="col-xs-11">
+            <input type="text" class="form-control" name="title" placeholder="Title">
+          </div>
+        </div>
+
+        <div class="col-xs-12 form-group">
+          <label class="col-xs-12 control-label" style="text-align: center; margin:8px 0px;">Skills</label>
+          
+          <% skills.forEach(function(skill){ %>
+            <div class="col-xs-12">
+              <div style="margin:16px 0px;">
+                <div class="col-xs-10 col-xs-offset-1">
+                  <div class="checkbox col-xs-offset-3 col-xs-2">
+                    <label><input type="checkbox" name="skill_<%=skill%>"><%= skill %></label>
+                  </div>
+                  <div class="col-xs-4">
+                    <input type="text" class="form-control" placeholder="Rank" name="skill_<%=skill%>">
+                  </div>
+                  <div class="col-xs-3"></div>
+                </div>
+                <div class="col-xs-1"></div>
+              </div>
+            </div>
+            <% }); %>
+
+        </div>
+        <div class="col-xs-12 form-group">
+          <button type="submit" class="col-xs-offset-5 col-xs-2 btn btn-success">Submit</button>
+        </div>
+
+      </form>
     </div>
   </div>
-  
-</form>
 
+</body>
 
-  </body>
- </html>
-  
+</html>

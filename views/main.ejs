@@ -1,51 +1,92 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>main</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
 
-  	<script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script  type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+    <style>
+        .website-title {
+            position: relative;
+            padding-top: 10%;
+            padding-bottom: 10%;
+            text-align: center;
+            color: #f8f8f8;
+        }
+    </style>
+
+</head>
 
 
-  </head>
+<body style="background-image:url('http://localhost:3000/images/bg2.jpg'); background-repeat: no-repeat; background-size: 100%; padding-top: 70px; background-attachment: fixed;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">CVs Filtering Project</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li> <a href="/addPosition">Add New Position</a> </li>
+                    <li> <a href="/positions">View All Positions</a> </li>
+                    <li> <a href="/addCv">Add New CV</a> </li>
+                    <li> <a href="/cvs">View All CVs</a> </li>
+                    <li> <a href="/result">Result</a> </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="website-title">
+    <div style="padding:20px 0px; background-color: rgba(1, 1, 1, 0.5)">   
+        <h1>CVs Filtering Project</h1>
+        <h3>KBS Project</h3>
+        <h5>Ahmad Ataya</h5>
+        <h5>Abd Almughith Alzabibi</h5>
+        <h5>Mohammad Salem Kabbani</h5>
+        <h5>Nadir Pervez</h5>
+
+    </div>
+    </div>
 
 
-  <body>
-<a class="btn btn-success" href="/addPosition">add Position</a>
-<a class="btn btn-success" href="/positions">view Positiones</a>
-<a class="btn btn-success" href="/addCv">add cv</a>
-<a class="btn btn-success" href="/cvs">view cvs</a>
-<a class="btn btn-success" href="/result">Result</a>
 
+</body>
+<script type="text/javascript">
+    $(function () {
+        $('#initializeSession').click(function (e) {
+            e.preventDefault();
+            console.log('test jquery clicked');
+            var data = {};
+            data.title = "title";
+            data.message = "message";
 
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: 'http://localhost:3000/initializeSession',
+                success: function (data) {
 
-  	
-
-  </body>
-		<script type="text/javascript">
-            $(function(){				
-                $('#initializeSession').click(function(e){
-                    e.preventDefault();
-                    console.log('test jquery clicked');
-					var data = {};
-					data.title = "title";
-					data.message = "message";
-					
-					$.ajax({
-						type: 'POST',
-						data: JSON.stringify(data),
-				        contentType: 'application/json',
-                        url: 'http://localhost:3000/initializeSession',						
-                        success: function(data) {
-
-                            alert(data.msg);
-                            console.log(JSON.stringify(data));
-                        }
-                    });
-			
-                });				
+                    alert(data.msg);
+                    console.log(JSON.stringify(data));
+                }
             });
-        </script>
- </html>
-  
+
+        });
+    });
+
+</script>
+
+</html>

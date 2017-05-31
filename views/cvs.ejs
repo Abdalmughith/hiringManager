@@ -1,43 +1,94 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>cv</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  	<script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script  type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-  </head>
-  <body>
-<a class="btn btn-success" href="/addCv">add cv</a>
+
+<head>
+	<title>cv</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	 crossorigin="anonymous">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+	<style>
+		.content {
+			background-color: #ecf0f1;
+			border: 3px #101010 solid;
+			border-radius: 6px;
+			padding: 32px 0px;
+			box-shadow: 3px 3px 12px gray;
+		}
+	</style>
+
+</head>
+
+<body style="background-image:url('http://localhost:3000/images/bg2.jpg'); background-repeat: no-repeat; background-size: 100%; padding-top: 70px; background-attachment: fixed;">
+
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				 aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+				<a class="navbar-brand" href="/">CVs Filtering Project</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li> <a href="/addPosition">Add New Position</a> </li>
+					<li> <a href="/positions">View All Positions</a> </li>
+					<li> <a href="/addCv">Add New CV</a> </li>
+					<li class="active"> <a href="/cvs">View All CVs</a> </li>
+					<li> <a href="/result">Result</a> </li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 
+	<div class="container">
+		<div class="col-xs-10 col-xs-offset-1">
+			<table class="table table-bordered content">
+				<tr style="background-color: #101010">
+					<th style="width: 20%; color: #ecf0f1; text-align: center;">name</th>
+					<th style="width: 20%; color: #ecf0f1; text-align: center;">age</th>
+					<th colspan="2" style="width: 60%; color: #ecf0f1; text-align: center;">skills</th>
+				</tr>
+
+				<% persones.forEach(function(pos, i){ var c = "#bdc3c7" ; if(i%2 != 0)  c = "#ecf0f1"; %>
+					<tr style="background-color: <%= c %>">
+						<td style="vertical-align: middle; text-align: center;" rowspan="<%= pos.skills.length + 1 %>">
+							<%= pos.name %>
+						</td>
+						<td style="vertical-align: middle; text-align: center;" rowspan="<%= pos.skills.length + 1 %>">
+							<%= pos.age %>
+						</td>
+
+						<td style="text-align: center;"><b>Name</b></td>
+						<td style="text-align: center;"><b>Rank</b></td>
+
+						<% pos.skills.forEach(function(skill){ %>
+							<tr style="background-color: <%= c %>">
+								<td style="text-align: center;">
+									<%= skill.name %>
+								</td>
+								<td style="text-align: center;">
+									<%=  skill.score %>
+								</td>
+							</tr>
+							<% }); %>
+					</tr>
+					<% }); %>
+
+			</table>
+			<div class="col-xs-2 col-xs-offset-10" style="margin-bottom: 16px;">
+				<a class="btn btn-success" href="/addCv">Add New CV</a>
+			</div>
+		</div>
+	</div>
 
 
-  	<table class="table table-bordered">
-	  	<tr>
-	  	    <th>name</th>
-	  	    <th>age</th>
-	  	    <th>education</th>
-	  	    <th>experience</th>
-		    <th>skills</th> 
-		</tr>
+</body>
 
-		<% persones.forEach(function(pos){ %>
-			<tr>
-				<td><%= pos.name %></td>
-				<td><%= pos.age %></td>
-				<td><%= pos.education %></td>
-				<td><%= pos.experience %></td>
-
-			    <td>
-			    	<% pos.skills.forEach(function(skill){ %>
-			    		<%= skill.name +' : '+skill.score + ' ,'%>
-			    	<% }); %>
-			    </td> 
-			</tr>
-		<% }); %>
- 
-	</table>
-
-  </body>
- </html>
-  
+</html>
