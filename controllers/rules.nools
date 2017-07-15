@@ -13,6 +13,14 @@ define Person {
 	}
 }
 
+
+define Time {
+        constructor: function (obj) {
+                this.start = obj.start;
+                this.end = obj.end;
+
+        }
+}
 define skill {
 	constructor: function (personId, skillName, score) {
 		this.personId = personId;
