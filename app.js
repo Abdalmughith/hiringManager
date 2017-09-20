@@ -15,8 +15,8 @@ _usersTemp = {};
 mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 ObjectId = mongoose.Schema.Types.ObjectId;
-// var mongodbUrl = 'mongodb://nasar:nasar@ds163360.mlab.com:63360/nasar';
-var mongodbUrl = 'mongodb://127.0.0.1:27017/hiringManager';
+ var mongodbUrl = 'mongodb://nasar:nasar@ds163360.mlab.com:63360/nasar';
+//var mongodbUrl = 'mongodb://127.0.0.1:27017/hiringManager';
 
 mongoose.connect(mongodbUrl);
 var db = mongoose.connection;
